@@ -9,6 +9,7 @@ export default {
   initialize() {
     withPluginApi("0.8.20", (api) => {
       const goBackDomains = settings.Custom_header_links;
+      goBackDomains = ["back,Goback,http://google.com,vdm,self,keep"]
       if (!goBackDomains.length) {
         return;
       }
