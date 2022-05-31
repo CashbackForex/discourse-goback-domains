@@ -1,4 +1,4 @@
-Custom_header_links:
+goBack_Domains_links:
   type: list
   list_type: simple
   default: "Back, this link will go back to pointed domain, http://cashbackforex.com, vdo, blank, keep"
