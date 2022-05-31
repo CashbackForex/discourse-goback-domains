@@ -4,12 +4,12 @@ import { wantsNewWindow } from "discourse/lib/intercept-click";
 import DiscourseURL from "discourse/lib/url";
 
 export default {
-  name: "discourse-goback-domains",
+  name: "discourse-custom-header-links",
 
   initialize() {
     withPluginApi("0.8.20", (api) => {
-      const goBackDomains = settings.goBack_Domains_links;
-      if (!goBackDomains.length) {
+      const goBackDomainLinks = settings.goBack_Domains_links;
+      if (!goBackDomainLinks.length) {
         return;
       }
 
@@ -20,34 +20,41 @@ export default {
 
       const headerLinks = [];
 
-      const [linkText, linkTitle, linkHref, device, target, keepOnScroll] = goBackDomains
-          .split(",")
-          .filter(Boolean)
-          .map((x) => x.trim());
-      const deviceClass = `.${device}`;
-      const linkTarget = target === "self" ? "" : "_blank";
-      const keepOnScrollClass = keepOnScroll === "keep" ? ".keep" : "";
-      const linkClass = `.${linkText
-        .toLowerCase()
-        .replace(/\s/gi, "-")}-goback-domains`;
+      goBackDomainLinks
+        .split("|")
+        .filter(Boolean)
+        .map((goBackDomainLinksArray) => {
+          const [linkText, linkTitle, linkHref, device, target, keepOnScroll] =
+            goBackDomainLinksArray
+              .split(",")
+              .filter(Boolean)
+              .map((x) => x.trim());
 
-      const anchorAttributes = {
-        title: linkTitle,
-        href: linkHref,
-      };
-      if (linkTarget) {
-        anchorAttributes.target = linkTarget;
-      }
+          const deviceClass = `.${device}`;
+          const linkTarget = target === "self" ? "" : "_blank";
+          const keepOnScrollClass = keepOnScroll === "keep" ? ".keep" : "";
+          const linkClass = `.${linkText
+            .toLowerCase()
+            .replace(/\s/gi, "-")}-custom-header-links`;
 
-      headerLinks.push(
-        h(
-          `li.headerLink${deviceClass}${keepOnScrollClass}${linkClass}`,
-          h("a", anchorAttributes, linkText)
-        )
-      );
+          const anchorAttributes = {
+            title: linkTitle,
+            href: linkHref,
+          };
+          if (linkTarget) {
+            anchorAttributes.target = linkTarget;
+          }
+
+          headerLinks.push(
+            h(
+              `li.headerLink${deviceClass}${keepOnScrollClass}${linkClass}`,
+              h("a", anchorAttributes, linkText)
+            )
+          );
+        });
 
       api.decorateWidget(linksPosition, (helper) => {
-        return helper.h("ul.goback-domains", headerLinks);
+        return helper.h("ul.custom-header-links", headerLinks);
       });
 
       api.decorateWidget("home-logo:after", (helper) => {
