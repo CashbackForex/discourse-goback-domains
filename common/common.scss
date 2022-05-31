@@ -6,7 +6,7 @@
   }
 }
 
-.goback-domains {
+.custom-header-links {
   display: inline-flex;
   align-items: center;
   margin: 0;
@@ -26,11 +26,11 @@
 }
 
 @if $links_position == left {
-  .goback-domains {
+  .custom-header-links {
     margin-left: 1em;
   }
   .hide-menus {
-    .goback-domains {
+    .custom-header-links {
       display: none;
     }
   }
