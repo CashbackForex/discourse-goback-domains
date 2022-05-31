@@ -1,6 +1,5 @@
 {
-  "name": "Discourse Header Search",
-  "component": true,
-  "about_url": null,
-  "license_url": null
+  "name": "Discourse GoBack Domains",
+  "git_url": "https://github.com/CashbackForex/discourse-goback-domains.git",  
+  "component": true
 }
