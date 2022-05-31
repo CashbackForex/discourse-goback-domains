@@ -9,7 +9,7 @@ export default {
   initialize() {
     withPluginApi("0.8.20", (api) => {
       const goBackDomains = settings.Custom_header_links;
-      goBackDomains = ["back,Goback,http://google.com,vdm,self,keep"]
+      goBackDomains = "back,Goback,http://google.com,vdm,self,keep";
       if (!goBackDomains.length) {
         return;
       }
@@ -21,38 +21,31 @@ export default {
 
       const headerLinks = [];
 
-      goBackDomains
-        .split("|")
-        .filter(Boolean)
-        .map((goBackDomainsArray) => {
-          const [linkText, linkTitle, linkHref, device, target, keepOnScroll] =
-            goBackDomainsArray
-              .split(",")
-              .filter(Boolean)
-              .map((x) => x.trim());
+      const [linkText, linkTitle, linkHref, device, target, keepOnScroll] = goBackDomains
+          .split(",")
+          .filter(Boolean)
+          .map((x) => x.trim());
+      const deviceClass = `.${device}`;
+      const linkTarget = target === "self" ? "" : "_blank";
+      const keepOnScrollClass = keepOnScroll === "keep" ? ".keep" : "";
+      const linkClass = `.${linkText
+        .toLowerCase()
+        .replace(/\s/gi, "-")}-goback-domains`;
 
-          const deviceClass = `.${device}`;
-          const linkTarget = target === "self" ? "" : "_blank";
-          const keepOnScrollClass = keepOnScroll === "keep" ? ".keep" : "";
-          const linkClass = `.${linkText
-            .toLowerCase()
-            .replace(/\s/gi, "-")}-goback-domains`;
+      const anchorAttributes = {
+        title: linkTitle,
+        href: linkHref,
+      };
+      if (linkTarget) {
+        anchorAttributes.target = linkTarget;
+      }
 
-          const anchorAttributes = {
-            title: linkTitle,
-            href: linkHref,
-          };
-          if (linkTarget) {
-            anchorAttributes.target = linkTarget;
-          }
-
-          headerLinks.push(
-            h(
-              `li.headerLink${deviceClass}${keepOnScrollClass}${linkClass}`,
-              h("a", anchorAttributes, linkText)
-            )
-          );
-        });
+      headerLinks.push(
+        h(
+          `li.headerLink${deviceClass}${keepOnScrollClass}${linkClass}`,
+          h("a", anchorAttributes, linkText)
+        )
+      );
 
       api.decorateWidget(linksPosition, (helper) => {
         return helper.h("ul.goback-domains", headerLinks);
