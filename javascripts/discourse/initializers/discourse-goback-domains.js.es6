@@ -7,7 +7,7 @@ export default {
   name: "discourse-custom-header-links",
 
   initialize() {
-    withPluginApi("0.8.20", (api) => {
+    withPluginApi("0.8.7", (api) => {
       const goBackDomainLinks = settings.goBack_Domains_links;
       if (!goBackDomainLinks.length) {
         return;
