@@ -13,9 +13,14 @@
   .headerLink {
     list-style: none;
     a {
-      padding: 6px 10px;
-      color: var(--header_primary);
-      font-size: $font-up-1;
+      //padding: 6px 10px;
+      //color: var(--header_primary);
+      //font-size: $font-up-1;
+      font-weight: bold;
+      text-transform: lowercase;
+      color: #8091A3;
+      line-height: 34px;
+      font-size: 11px;
     }
   }
 }
